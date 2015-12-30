@@ -29,7 +29,7 @@ import ScoverageKeys._
 object build extends Build {
   type Settings = Def.Setting[_]
 
-  lazy val SCALAZ_VERSION = "7.1.0"
+  lazy val SCALAZ_VERSION = "7.2.0"
 
   /** MAIN PROJECT */
   lazy val specs2 = Project(
@@ -46,17 +46,17 @@ object build extends Build {
   
   /** COMMON SETTINGS */
   lazy val specs2Settings: Seq[Settings] = Seq(
-    organization := "org.specs2",
+    organization := "com.github.japgolly.fork.specs2",
     specs2Version in GlobalScope <<= version,
     specs2ShellPrompt,
     scalazVersion := SCALAZ_VERSION,
-    scalaVersion := "2.11.5",
+    scalaVersion := "2.11.7",
     crossScalaVersions := Seq(scalaVersion.value, "2.10.4"))
 
   lazy val specs2Version = settingKey[String]("defines the current specs2 version")
   lazy val scalazVersion = settingKey[String]("defines the current scalaz version")
-  lazy val paradisePlugin = Seq(compilerPlugin("org.scalamacros" %% "paradise"    % "2.0.0" cross CrossVersion.full),
-                                               "org.scalamacros" %% "quasiquotes" % "2.0.0")
+  lazy val paradisePlugin = Seq(compilerPlugin("org.scalamacros" %% "paradise"    % "2.1.0" cross CrossVersion.full),
+                                               "org.scalamacros" %% "quasiquotes" % "2.1.0")
 
   lazy val aggregateCompile = ScopeFilter(
              inProjects(common, matcher, matcherExtra, core, html, analysis, form, markdown, gwt, junit, scalacheck, mock),
@@ -121,6 +121,8 @@ object build extends Build {
             "org.scalaz"     %% "scalaz-core"       % scalazVersion.value,
             "org.scalaz"     %% "scalaz-concurrent" % scalazVersion.value,
             "org.scala-lang" %  "scala-reflect"     % scalaVersion.value,
+            "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4",
+            "org.scala-lang.modules" %% "scala-xml" % "1.0.5",
             scalacheckLib % "test")) ++
       Seq(name := "specs2-common")
   )
